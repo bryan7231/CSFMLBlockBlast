@@ -1,9 +1,12 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include "globals.hpp"
 
 class Block {
 private:
-sf::RectangleShape rect; 
+    sf::RectangleShape rect; 
+    sf::Vector2i tetroCoords; 
 public:
 
     static std::vector<sf::Color> Colors;
@@ -15,6 +18,9 @@ public:
     sf::Vector2f getPosition();
     void setPosition(sf::Vector2f pos);
     void setPosition(float x, float y);
+
+    sf::Vector2i getTetroPos();
+    void setTetroPos(sf::Vector2i pos);
 
     sf::RectangleShape shape();
 };

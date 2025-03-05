@@ -1,15 +1,21 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-#include "include/block.hpp"
+#include "include/tetromino.hpp"
+#include "include/board.hpp"
 #include "include/globals.hpp"
 
 int main()
 {
-    auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "Block Blast");
+    auto window = sf::RenderWindow(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), "Block Blast");
     window.setFramerateLimit(144);
 
-    Block b1(Color::TEAL, {0.f, 0.f});
-    Block b2(Color::TEAL, {45.f, 0.f});
+    Board board;
+
+    // Block b1(Color::TEAL, {0.f, 0.f});
+    Block b2(Color::TEAL, {BLOCK_SIZE, 0.f});
+
+    Tetromino line(TetrominoShape::Rectangle, Color::TEAL, {100.0f, 200.0f}); 
 
     while (window.isOpen())
     {
@@ -22,8 +28,10 @@ int main()
         }
 
         window.clear(BACKGROUND_COLOR);
-        window.draw(b1.shape());
-        window.draw(b2.shape());
+        window.draw(board.outline);
+
+        line.draw(window);
+
         window.display();
     }
 }
