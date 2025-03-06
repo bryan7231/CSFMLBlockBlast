@@ -12,10 +12,7 @@ int main()
 
     Board board;
 
-    // Block b1(Color::TEAL, {0.f, 0.f});
-    Block b2(Color::TEAL, {BLOCK_SIZE, 0.f});
-
-    Tetromino line(TetrominoShape::Rectangle, Color::TEAL, {100.0f, 200.0f}); 
+    Tetromino line(TetrominoShape::Rectangle, Color::TEAL, toGlobalCoords({0, 0})); 
 
     while (window.isOpen())
     {
@@ -24,11 +21,25 @@ int main()
             if (event->is<sf::Event::Closed>())
             {
                 window.close();
+            } 
+            if (event->is<sf::Event::MouseButtonPressed>()) 
+            {
+                std::cout << sf::Mouse::getPosition().x - window.getPosition().x << ", " << sf::Mouse::getPosition().y - window.getPosition().y << "\n";
+                mouseHeld = true; 
+            }
+            if (event->is<sf::Event::MouseButtonReleased>()) 
+            {
+                mouseHeld = false; 
             }
         }
 
+        line.update(window, board.board);
+
+        board.updateBoard();
+
         window.clear(BACKGROUND_COLOR);
-        window.draw(board.outline);
+        
+        board.draw(window);
 
         line.draw(window);
 

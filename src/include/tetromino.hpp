@@ -7,18 +7,22 @@
 
 class Tetromino {
 private:
-    
+    std::vector<Block> blocks;      
     std::vector<std::vector<bool>> layout; 
 
     sf::Vector2f position; 
+    sf::Vector2f hitbox; 
+    sf::Vector2f initialOffset; 
     bool visible; 
+    bool clicked;
     Color color; 
+
+    bool checkCollisions(sf::Vector2f pos); 
 public:
-std::vector<Block> blocks;  
     Tetromino(TetrominoShape s, Color c, sf::Vector2f position);
     Tetromino(std::vector<std::vector<bool>> layout, Color c, sf::Vector2f position);
 
-    void update();
+    void update(sf::RenderWindow& window, std::vector<std::vector<int>> board);
     void rotate(int deg);
     void hFlip(); 
     void vFlip(); 
