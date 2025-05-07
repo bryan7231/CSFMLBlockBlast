@@ -47,6 +47,6 @@ void Block::setPosition(float x, float y) {
     rect.setPosition({x, y});
 }
 
-sf::RectangleShape Block::shape() {
+sf::RectangleShape& Block::shape() {
     return rect; 
 }

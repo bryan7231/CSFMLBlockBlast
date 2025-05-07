@@ -1,4 +1,5 @@
 #include "include/board.hpp"
+#include <iostream>
 
 Board::Board() {
     board.assign(BOARD_SIZE, std::vector<int>(BOARD_SIZE, -1));
@@ -33,11 +34,14 @@ void Board::updateBoard() {
                 grid[i][j].setFillColor(BACKGROUND_COLOR);
                 grid[i][j].setOutlineColor(BACKGROUND_COLOR);
             } else if (board[i][j] == -2) { // Highlighted cell
-                grid[i][j].setFillColor(GRID_COLOR);
+                grid[i][j].setFillColor(HIGHLIGHT_COLOR);
                 grid[i][j].setOutlineColor(BACKGROUND_COLOR);
             }
+            // std::cout << board[i][j] << " ";
         }
+        // std::cout << "\n";
     }
+    // std::cout << "---------------------------------------------\n";
 
     // To-do Check for completed rows. 
 }

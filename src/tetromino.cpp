@@ -6,7 +6,7 @@ Tetromino::Tetromino(TetrominoShape s, Color c, sf::Vector2f position): Tetromin
 
 
 // Create a tetromino with a shape defined by 5x5 vector layout, a Color c, and a position vector. 
-Tetromino::Tetromino(std::vector<std::vector<bool>> layout, Color c, sf::Vector2f position): layout(layout), color(c), position(position), clicked(false), initialOffset({0, 0}) {
+Tetromino::Tetromino(std::vector<std::vector<bool>> layout, Color c, sf::Vector2f position): layout(layout), color(c), position(position), clicked(false), initialOffset({0, 0}), validPos(false) {
     this->visible = true; 
     for (int i = 0; i < layout.size(); i++) {
         for (int j = 0; j < layout[i].size(); j++) {
@@ -28,13 +28,18 @@ bool Tetromino::checkCollisions(sf::Vector2f pos) {
     return pos.x >= position.x && pos.x <= hitbox.x && pos.y >= position.y && pos.y <= hitbox.y; 
 }   
 
-void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>> board) {
+void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>>& board) {
     if (visible) {
         float y_off = 0.0; 
         float x_off = 0.0; 
         sf::Vector2f mousePos = mouseToGlobalCoords(window, sf::Mouse::getPosition()); 
 
         if (!mouseHeld) {
+            if (validPos && clicked) {
+                // TO-DO: set all tiles on the board to be real and hide visibility. 
+                validPos = false;
+                std::cout << "Valid Position to Place!\n"; 
+            }
             this->clicked = false; 
         }
 
@@ -47,18 +52,40 @@ void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>> b
         }
 
         hitbox = {0.f, 0.f};
+        if (clicked) validPos = true; 
         for (Block& b : this->blocks) {
             // Erase old highlighted blocks. 
             sf::Vector2i oldGridCoords = toGridCoords(b.getPosition()); 
 
             if (withinBoard(oldGridCoords)) {
-                board[oldGridCoords.x][oldGridCoords.y] = -1; 
+                board[oldGridCoords.y][oldGridCoords.x] = -1; 
+            }
+
+            // Make block transparent when dragged around. 
+            if (clicked) {
+                sf::Color c = b.shape().getFillColor();
+                c.a = 128; 
+                sf::Color o = b.shape().getOutlineColor();
+                o.a = 128; 
+                b.shape().setFillColor(c); 
+                b.shape().setOutlineColor(o); 
+            } else {
+                sf::Color c = b.shape().getFillColor();
+                c.a = 255; 
+                sf::Color o = b.shape().getOutlineColor();
+                o.a = 255; 
+                b.shape().setFillColor(c); 
+                b.shape().setOutlineColor(o); 
             }
 
             b.setPosition(this->position + sf::Vector2f{BLOCK_SIZE*b.getTetroPos().x + x_off, BLOCK_SIZE*b.getTetroPos().y + y_off});
 
             sf::Vector2i newGridCoords = toGridCoords(b.getPosition());
-            if (withinBoard(newGridCoords)) board[oldGridCoords.x][oldGridCoords.y] = -2; 
+            // std::cout << b.getPosition().x << ", " << b.getPosition().y << "\n";
+            // std::cout << newGridCoords.x << ", " << newGridCoords.y << "\n";
+            // std::cout << "---------------------------------------------------\n"; 
+            if (withinBoard(newGridCoords)) board[newGridCoords.y][newGridCoords.x] = -2; 
+            else validPos = false; 
             hitbox = {std::max(hitbox.x, b.getPosition().x + BLOCK_SIZE), std::max(hitbox.y, b.getPosition().y + BLOCK_SIZE)};
         }
     }

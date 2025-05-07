@@ -19,8 +19,12 @@ public:
     void setPosition(sf::Vector2f pos);
     void setPosition(float x, float y);
 
+    // Fetches the position of hte block relative to its parent tetromino
     sf::Vector2i getTetroPos();
+
+    // Sets the position of the block relative to its parent tetromino
     void setTetroPos(sf::Vector2i pos);
 
-    sf::RectangleShape shape();
+    // Returns a reference to the sf:RectangleShape of the block. 
+    sf::RectangleShape& shape();
 };

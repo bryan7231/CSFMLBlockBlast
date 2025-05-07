@@ -1,4 +1,5 @@
 #include "../include/globals.hpp"
+#include <cmath>
 
 bool mouseHeld = false; 
 
@@ -98,7 +99,7 @@ std::vector<std::vector<std::vector<bool>>> tetrominoes =
 };
 
 sf::Vector2i toGridCoords(sf::Vector2f globalCoords) {
-    return {(globalCoords.x - X_OFFSET)/ (int) BLOCK_SIZE, (globalCoords.y - Y_OFFSET)/ (int) BLOCK_SIZE};
+    return {(int)std::round((globalCoords.x - (X_OFFSET))/  BLOCK_SIZE), (int)std::round((globalCoords.y - (Y_OFFSET))/BLOCK_SIZE)};
 }
 
 sf::Vector2f toGlobalCoords(sf::Vector2i gridCoords) {
@@ -113,5 +114,5 @@ sf::Vector2f mouseToGlobalCoords(sf::RenderWindow& window, sf::Vector2i mouse) {
 }
 
 bool withinBoard(sf::Vector2i gridCoords) {
-    return gridCoords.x >= 0 && gridCoords.x <= BOARD_SIZE && gridCoords.y >= 0 && gridCoords.y <= BOARD_SIZE; 
+    return gridCoords.x >= 0 && gridCoords.x < BOARD_SIZE && gridCoords.y >= 0 && gridCoords.y < BOARD_SIZE; 
 }

@@ -24,7 +24,7 @@ int main()
             } 
             if (event->is<sf::Event::MouseButtonPressed>()) 
             {
-                std::cout << sf::Mouse::getPosition().x - window.getPosition().x << ", " << sf::Mouse::getPosition().y - window.getPosition().y << "\n";
+                // std::cout << sf::Mouse::getPosition().x - window.getPosition().x << ", " << sf::Mouse::getPosition().y - window.getPosition().y << "\n";
                 mouseHeld = true; 
             }
             if (event->is<sf::Event::MouseButtonReleased>()) 

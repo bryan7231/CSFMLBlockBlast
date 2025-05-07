@@ -15,6 +15,7 @@ private:
     sf::Vector2f initialOffset; 
     bool visible; 
     bool clicked;
+    bool validPos; 
     Color color; 
 
     bool checkCollisions(sf::Vector2f pos); 
@@ -22,7 +23,7 @@ public:
     Tetromino(TetrominoShape s, Color c, sf::Vector2f position);
     Tetromino(std::vector<std::vector<bool>> layout, Color c, sf::Vector2f position);
 
-    void update(sf::RenderWindow& window, std::vector<std::vector<int>> board);
+    void update(sf::RenderWindow& window, std::vector<std::vector<int>>& board);
     void rotate(int deg);
     void hFlip(); 
     void vFlip(); 
