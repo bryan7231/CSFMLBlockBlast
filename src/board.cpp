@@ -36,6 +36,9 @@ void Board::updateBoard() {
             } else if (board[i][j] == -2) { // Highlighted cell
                 grid[i][j].setFillColor(HIGHLIGHT_COLOR);
                 grid[i][j].setOutlineColor(BACKGROUND_COLOR);
+            } else {
+                grid[i][j].setFillColor(Colors[board[i][j]]);
+                grid[i][j].setOutlineColor(BACKGROUND_COLOR);
             }
             // std::cout << board[i][j] << " ";
         }

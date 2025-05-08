@@ -12,7 +12,7 @@ int main()
 
     Board board;
 
-    Tetromino line(TetrominoShape::Rectangle, Color::TEAL, toGlobalCoords({0, 0})); 
+    Tetromino line(TetrominoShape::Rectangle, Color::TEAL, {TILE_START_X, TILE_START_Y}); 
 
     while (window.isOpen())
     {

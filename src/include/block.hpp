@@ -8,8 +8,6 @@ private:
     sf::RectangleShape rect; 
     sf::Vector2i tetroCoords; 
 public:
-
-    static std::vector<sf::Color> Colors;
     Block();
     Block(Color color);
     Block(sf::Vector2f pos);

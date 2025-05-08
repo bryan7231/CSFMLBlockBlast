@@ -3,6 +3,16 @@
 
 bool mouseHeld = false; 
 
+std::vector<sf::Color> Colors = {
+    sf::Color(218, 98, 98), // RED
+    sf::Color(222, 137, 53), // ORANGE
+    sf::Color(244, 239, 149), // YELLOW
+    sf::Color(51, 158, 72), // GREEN
+    sf::Color(122, 205, 255), // TEAL
+    sf::Color(34, 69, 150), // BLUE
+    sf::Color(168, 153, 199) // PURPLE
+};
+
 std::vector<std::vector<std::vector<bool>>> tetrominoes = 
 {
     { // Line 2

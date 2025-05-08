@@ -6,7 +6,7 @@ Tetromino::Tetromino(TetrominoShape s, Color c, sf::Vector2f position): Tetromin
 
 
 // Create a tetromino with a shape defined by 5x5 vector layout, a Color c, and a position vector. 
-Tetromino::Tetromino(std::vector<std::vector<bool>> layout, Color c, sf::Vector2f position): layout(layout), color(c), position(position), clicked(false), initialOffset({0, 0}), validPos(false) {
+Tetromino::Tetromino(std::vector<std::vector<bool>> layout, Color c, sf::Vector2f position): layout(layout), color(c), position(position), clicked(false), initialPos(position), initialOffset({0, 0}), validPos(false) {
     this->visible = true; 
     for (int i = 0; i < layout.size(); i++) {
         for (int j = 0; j < layout[i].size(); j++) {
@@ -34,21 +34,24 @@ void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>>& 
         float x_off = 0.0; 
         sf::Vector2f mousePos = mouseToGlobalCoords(window, sf::Mouse::getPosition()); 
 
-        if (!mouseHeld) {
-            if (validPos && clicked) {
-                // TO-DO: set all tiles on the board to be real and hide visibility. 
-                validPos = false;
-                std::cout << "Valid Position to Place!\n"; 
-            }
-            this->clicked = false; 
-        }
-
         if (mouseHeld && (checkCollisions(mousePos) || this->clicked)) {
             y_off = -15.0f;
 
             if (!clicked) initialOffset = mousePos - position; 
             this->position = mousePos - initialOffset;
             clicked = true; 
+        }
+
+        if (!mouseHeld) {
+            if (validPos && clicked) {
+                validPos = false;
+                // std::cout << "Valid Position to Place!\n"; 
+                visible = false; 
+                y_off = -15.0f; 
+            } else if (!validPos && clicked) {
+                this->position = initialPos; 
+            } 
+            this->clicked = false;  
         }
 
         hitbox = {0.f, 0.f};
@@ -86,6 +89,11 @@ void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>>& 
             // std::cout << "---------------------------------------------------\n"; 
             if (withinBoard(newGridCoords)) board[newGridCoords.y][newGridCoords.x] = -2; 
             else validPos = false; 
+
+            if (!visible) {
+                b.setPosition(toGlobalCoords(newGridCoords));
+                board[newGridCoords.y][newGridCoords.x] = this->color; 
+            }
             hitbox = {std::max(hitbox.x, b.getPosition().x + BLOCK_SIZE), std::max(hitbox.y, b.getPosition().y + BLOCK_SIZE)};
         }
     }

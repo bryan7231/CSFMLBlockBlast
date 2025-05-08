@@ -13,6 +13,7 @@ private:
     sf::Vector2f position; 
     sf::Vector2f hitbox; 
     sf::Vector2f initialOffset; 
+    sf::Vector2f initialPos; 
     bool visible; 
     bool clicked;
     bool validPos; 
