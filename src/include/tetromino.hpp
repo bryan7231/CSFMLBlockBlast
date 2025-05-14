@@ -31,6 +31,8 @@ public:
     void draw(sf::RenderWindow& r); 
 
     void toggleVisibility(); 
+
+    bool isVisible();
 };
 
 

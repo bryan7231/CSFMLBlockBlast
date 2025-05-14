@@ -60,7 +60,7 @@ void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>>& 
             // Erase old highlighted blocks. 
             sf::Vector2i oldGridCoords = toGridCoords(b.getPosition()); 
 
-            if (withinBoard(oldGridCoords)) {
+            if (withinBoard(oldGridCoords) && board[oldGridCoords.y][oldGridCoords.x] == -2) {
                 board[oldGridCoords.y][oldGridCoords.x] = -1; 
             }
 
@@ -87,7 +87,7 @@ void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>>& 
             // std::cout << b.getPosition().x << ", " << b.getPosition().y << "\n";
             // std::cout << newGridCoords.x << ", " << newGridCoords.y << "\n";
             // std::cout << "---------------------------------------------------\n"; 
-            if (withinBoard(newGridCoords)) board[newGridCoords.y][newGridCoords.x] = -2; 
+            if (withinBoard(newGridCoords) && board[newGridCoords.y][newGridCoords.x] == -1) board[newGridCoords.y][newGridCoords.x] = -2; 
             else validPos = false; 
 
             if (!visible) {
@@ -210,4 +210,8 @@ void Tetromino::draw(sf::RenderWindow& w) {
 
 void Tetromino::toggleVisibility() {
     this->visible = !this->visible; 
+}
+
+bool Tetromino::isVisible() {
+    return this->visible; 
 }

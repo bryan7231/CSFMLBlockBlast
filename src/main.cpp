@@ -4,6 +4,7 @@
 #include "include/tetromino.hpp"
 #include "include/board.hpp"
 #include "include/globals.hpp"
+#include "include/bag.hpp"
 
 int main()
 {
@@ -12,7 +13,9 @@ int main()
 
     Board board;
 
-    Tetromino line(TetrominoShape::Rectangle, Color::TEAL, {TILE_START_X, TILE_START_Y}); 
+    // Tetromino line(TetrominoShape::L3, Color::TEAL, {TILE_START_X, TILE_START_Y}); 
+
+    Bag bag(3); 
 
     while (window.isOpen())
     {
@@ -33,7 +36,9 @@ int main()
             }
         }
 
-        line.update(window, board.board);
+        // line.update(window, board.board);
+
+        bag.update(window, board.board); 
 
         board.updateBoard();
 
@@ -41,7 +46,9 @@ int main()
         
         board.draw(window);
 
-        line.draw(window);
+        bag.draw(window);
+
+        // line.draw(window);
 
         window.display();
     }

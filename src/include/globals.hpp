@@ -10,6 +10,7 @@ extern bool mouseHeld;
 #define BACKGROUND_COLOR sf::Color(43, 43, 43)
 #define GRID_COLOR sf::Color(60, 60, 60)
 #define HIGHLIGHT_COLOR sf::Color(240, 240, 240)
+#define BAG_COLOR sf::Color(68, 119, 206)
 
 #define BLOCK_SIZE 75.f
 #define OUTLINE_WIDTH 2.5f
