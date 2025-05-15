@@ -2,6 +2,9 @@
 #include <cmath>
 
 bool mouseHeld = false; 
+int dragged = -1; 
+int currId = 0; 
+bool gameOver = false; 
 
 std::vector<sf::Color> Colors = {
     sf::Color(218, 98, 98), // RED

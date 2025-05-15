@@ -3,6 +3,9 @@
 #include <SFML/Graphics.hpp>
 
 extern bool mouseHeld; 
+extern int dragged; 
+extern int currId; 
+extern bool gameOver; 
 
 #define WINDOW_WIDTH 1920u
 #define WINDOW_HEIGHT 1080u

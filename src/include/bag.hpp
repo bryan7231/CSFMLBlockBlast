@@ -20,6 +20,7 @@ public:
     sf::Vector2f getPosition(); 
 
     bool insertTetromino(Tetromino t); 
+    bool hasValidPos(Tetromino t, std::vector<std::vector<int>>& board);
 
     void update(sf::RenderWindow& r, std::vector<std::vector<int>>& board);
     void draw(sf::RenderWindow& w);

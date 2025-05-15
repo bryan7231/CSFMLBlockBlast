@@ -38,6 +38,11 @@ int main()
 
         // line.update(window, board.board);
 
+        if (gameOver) {
+            std::cout << "Game over!" << "\n"; 
+            continue; 
+        }
+
         bag.update(window, board.board); 
 
         board.updateBoard();
