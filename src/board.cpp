@@ -28,6 +28,39 @@ Board::Board() {
 
 void Board::updateBoard() {
 
+    std::vector<int> completedRows, completedCols; 
+    // Check for rows 
+    for (int r = 0; r < board.size(); r++) {
+        bool complete = true;
+        for (int c = 0; c < board.size(); c++) {
+            if (board[r][c] < 0) complete = false; 
+        } 
+        if (complete) completedRows.push_back(r); 
+    }
+    // Check for columns
+    for (int c = 0; c < board.size(); c++) {
+        bool complete = true; 
+        for (int r = 0; r < board.size(); r++) {
+            if (board[r][c] < 0) complete = false;
+        }
+        if (complete) completedCols.push_back(c); 
+    }
+    
+    // To-Do: Calculate score
+
+    // Remove completed rows and columns
+    for (int r : completedRows) {
+        for (int c = 0; c < board.size(); c++) {
+            board[r][c] = -1; 
+        }
+    }
+
+    for (int c : completedCols) {
+        for (int r = 0; r < board.size(); r++) {
+            board[r][c] = -1;
+        }
+    }
+
     for (int i = 0; i < board.size(); i++) {
         for (int j = 0; j < board[i].size(); j++) {
             if (board[i][j] == -1) { // Empty cell
@@ -45,8 +78,6 @@ void Board::updateBoard() {
         // std::cout << "\n";
     }
     // std::cout << "---------------------------------------------\n";
-
-    // To-do Check for completed rows. 
 }
 
 void Board::draw(sf::RenderWindow& window) {
