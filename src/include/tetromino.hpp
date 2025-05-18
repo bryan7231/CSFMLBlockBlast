@@ -30,8 +30,9 @@ public:
     void setPosition(sf::Vector2f pos); 
     std::vector<std::vector<bool>>& getLayout(); 
 
-    void update(sf::RenderWindow& window, std::vector<std::vector<int>>& board);
+    bool update(sf::RenderWindow& window, std::vector<std::vector<int>>& board);
     void draw(sf::RenderWindow& r); 
+    void draw(sf::RenderTexture& r); 
 
     void rotate(int deg);
     void hFlip(); 

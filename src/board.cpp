@@ -1,5 +1,6 @@
 #include "include/board.hpp"
 #include <iostream>
+#include <math.h>
 
 Board::Board() {
     board.assign(BOARD_SIZE, std::vector<int>(BOARD_SIZE, -1));
@@ -46,7 +47,18 @@ void Board::updateBoard() {
         if (complete) completedCols.push_back(c); 
     }
     
-    // To-Do: Calculate score
+    const float baseScore = 10; 
+
+    // 1. Base score * the number of rows and columns removed
+    // 2. Exponential growth based on number of rows
+    // 3. Multiplier for getting both rows and columns 
+    if (completedRows.size() || completedCols.size()) {
+        int totalClears = completedRows.size() + completedCols.size(); 
+        float addedScore = baseScore * totalClears * powf(1.5f, totalClears); 
+        addedScore += addedScore * completedRows.size() * completedCols.size(); 
+        score += addedScore; 
+        // std::cout << "Score: " << score << "\n"; 
+    }
 
     // Remove completed rows and columns
     for (int r : completedRows) {
@@ -86,6 +98,24 @@ void Board::draw(sf::RenderWindow& window) {
     for (auto& rects : grid) {
         for (auto& rect : rects) {
             window.draw(rect);
+        }
+    }
+}
+
+void Board::draw(sf::RenderTexture& window) {
+    window.draw(outline);
+
+    for (auto& rects : grid) {
+        for (auto& rect : rects) {
+            window.draw(rect);
+        }
+    }
+}
+
+void Board::clear() {
+    for (int i = 0; i < board.size(); i++) {
+        for (int j = 0; j < board[i].size(); j++) {
+            board[i][j] = -1; 
         }
     }
 }

@@ -89,7 +89,8 @@ void Tetromino::shiftLayout() {
     layout = newLayout; 
 }
 
-void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>>& board) {
+bool Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>>& board) {
+    bool ret = false; 
     if (visible) {
         float y_off = 0.0; 
         float x_off = 0.0; 
@@ -108,6 +109,7 @@ void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>>& 
             if (validPos && clicked) {
                 validPos = false;
                 // std::cout << "Valid Position to Place!\n"; 
+                ret = true; 
                 visible = false; 
                 y_off = -15.0f; 
             } else if (!validPos && clicked) {
@@ -160,6 +162,7 @@ void Tetromino::update(sf::RenderWindow& window, std::vector<std::vector<int>>& 
             hitbox = {std::max(hitbox.x, b.getPosition().x + BLOCK_SIZE), std::max(hitbox.y, b.getPosition().y + BLOCK_SIZE)};
         }
     }
+    return ret; 
 }
 
 void Tetromino::rotate(int deg) {
@@ -274,6 +277,14 @@ void Tetromino::vFlip() {
 }
 
 void Tetromino::draw(sf::RenderWindow& w) {
+    if (this->visible) {
+        for (Block b : this->blocks) {
+            w.draw(b.shape()); 
+        }
+    }
+}
+
+void Tetromino::draw(sf::RenderTexture& w) {
     if (this->visible) {
         for (Block b : this->blocks) {
             w.draw(b.shape()); 

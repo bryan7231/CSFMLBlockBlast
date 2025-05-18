@@ -6,6 +6,7 @@ extern bool mouseHeld;
 extern int dragged; 
 extern int currId; 
 extern bool gameOver; 
+extern float score; 
 
 #define WINDOW_WIDTH 1920u
 #define WINDOW_HEIGHT 1080u

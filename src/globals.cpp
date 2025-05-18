@@ -1,10 +1,14 @@
 #include "../include/globals.hpp"
 #include <cmath>
 
+#include "board.hpp"
+#include "bag.hpp"
+
 bool mouseHeld = false; 
 int dragged = -1; 
 int currId = 0; 
 bool gameOver = false; 
+float score = 0; 
 
 std::vector<sf::Color> Colors = {
     sf::Color(218, 98, 98), // RED

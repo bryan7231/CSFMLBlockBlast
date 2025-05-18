@@ -16,4 +16,7 @@ public:
     Board();
     void updateBoard();
     void draw(sf::RenderWindow& window);
+    void draw(sf::RenderTexture& window);
+
+    void clear(); 
 };

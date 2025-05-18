@@ -24,8 +24,10 @@ public:
 
     void update(sf::RenderWindow& r, std::vector<std::vector<int>>& board);
     void draw(sf::RenderWindow& w);
+    void draw(sf::RenderTexture& w);
 
     void refillBag();
+    void reset(); 
 
     Bag(int capacity);
 

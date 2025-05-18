@@ -1,0 +1,83 @@
+#include "include/scoreboard.hpp"
+#include <iostream> 
+
+Scoreboard::Scoreboard(std::string font): text(this->font), restartText(this->font) {
+    if (!this->font.openFromFile("../fonts/" + font)) {
+        std::cout << "No font found!" << "\n"; 
+    } else {
+        text.setFont(this->font); 
+        setFontSize(60); 
+        setColor(HIGHLIGHT_COLOR); 
+        setText("Adding text..."); 
+        setStyle(sf::Text::Bold);
+
+        restartText.setFont(this->font); 
+        restartText.setCharacterSize(120); 
+        restartText.setFillColor(sf::Color::Red);
+        restartText.setStyle(sf::Text::Bold); 
+        restartText.setString("Press Space to restart");
+
+        float xPos = (WINDOW_WIDTH / 2.f + (BLOCK_SIZE * BOARD_SIZE) / 8.f + WINDOW_WIDTH) / 2.f; 
+        setPosition({xPos, WINDOW_HEIGHT/2.f - 60});
+    }
+}
+
+void Scoreboard::setFontSize(int fontSize) {
+    text.setCharacterSize(fontSize);
+}
+
+void Scoreboard::setText(std::string text) {
+    this->text.setString(text); 
+}
+
+void Scoreboard::setStyle(uint32_t t) {
+    this->text.setStyle(t); 
+}
+
+void Scoreboard::setColor(sf::Color c) {
+    this->text.setFillColor(c);
+}
+
+void Scoreboard::setPosition(sf::Vector2f v) {
+    this->text.setPosition(v); 
+}
+
+void Scoreboard::update() {
+    if (gameOver) {
+
+        setFontSize(120); 
+        setColor(sf::Color::Red); 
+        setPosition({WINDOW_WIDTH / 2.f - 350.f, WINDOW_HEIGHT / 2.f - 200.f}); 
+        setText(
+            "GAME OVER!\nScore: " + 
+            std::to_string((int)score) + 
+            std::to_string(score - (int)score).substr(1, 3)
+        ); 
+        setStyle(sf::Text::Bold);
+
+        restartText.setPosition({WINDOW_WIDTH / 2.f - 550.f, WINDOW_HEIGHT / 2.f + 200.f});
+        return; 
+    }
+
+    setText("Score:\n" + std::to_string((int)score) + std::to_string(score - (int)score).substr(1, 3)); 
+}
+
+void Scoreboard::draw(sf::RenderWindow& window) {
+    window.draw(text); 
+    if (gameOver) window.draw(restartText); 
+}
+
+void Scoreboard::draw(sf::RenderTexture& window) {
+    window.draw(text); 
+    if (gameOver) window.draw(restartText); 
+}
+
+void Scoreboard::reset() {
+    setFontSize(60); 
+    setColor(HIGHLIGHT_COLOR); 
+    setText("Adding text..."); 
+    setStyle(sf::Text::Bold);
+
+    float xPos = (WINDOW_WIDTH / 2.f + (BLOCK_SIZE * BOARD_SIZE) / 8.f + WINDOW_WIDTH) / 2.f; 
+    setPosition({xPos, WINDOW_HEIGHT/2.f - 60});
+} 

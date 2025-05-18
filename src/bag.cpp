@@ -69,6 +69,12 @@ void Bag::refillBag() {
     }
 }
 
+void Bag::reset() {
+    tetros.clear();
+
+    refillBag(); 
+}
+
 bool Bag::hasValidPos(Tetromino t, std::vector<std::vector<int>>& board) {
     sf::Vector2i size = {(int)t.getSize().x, (int)t.getSize().y}; 
 
@@ -77,7 +83,7 @@ bool Bag::hasValidPos(Tetromino t, std::vector<std::vector<int>>& board) {
             bool isValid = true; 
             for (int r = 0; r < size.y; r++) {
                 for (int c = 0; c < size.x; c++) {
-                    if (t.getLayout()[r][c] && board[i+r][j+c] != -1)  {
+                    if (t.getLayout()[r][c] && board[i+r][j+c] >= 0)  {
                         isValid = false; 
                         break; 
                     }
@@ -91,19 +97,23 @@ bool Bag::hasValidPos(Tetromino t, std::vector<std::vector<int>>& board) {
 }
 
 void Bag::update(sf::RenderWindow& r, std::vector<std::vector<int>>& board) {
-    if (tetros.empty()) refillBag(); 
+    if (tetros.empty()) {
+        refillBag(); 
+        return; 
+    }
 
-    // Erase invisible blocks
+    bool placedBlock = false; 
+    // Erase invisible blocks and update blocks
     for (int i = tetros.size()-1; i >= 0; i--) {
         if (!tetros[i].isVisible()) {
             tetros.erase(tetros.begin()+i);
         } else {
-            tetros[i].update(r, board); 
+            placedBlock |= tetros[i].update(r, board); 
         }
     }   
-    
+
     // Check for game over
-    if (!tetros.empty()) {
+    if (!tetros.empty() && !placedBlock) {
         bool validPos = false; 
         for (int i = 0; i < tetros.size(); i++) {
             if (hasValidPos(tetros[i], board)) {
@@ -115,6 +125,14 @@ void Bag::update(sf::RenderWindow& r, std::vector<std::vector<int>>& board) {
 }
 
 void Bag::draw(sf::RenderWindow& r) {
+    r.draw(boundingBox); 
+    for (Tetromino& t : tetros) {
+        t.draw(r);
+    }
+}
+
+
+void Bag::draw(sf::RenderTexture& r) {
     r.draw(boundingBox); 
     for (Tetromino& t : tetros) {
         t.draw(r);

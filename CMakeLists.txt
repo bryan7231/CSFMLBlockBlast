@@ -16,6 +16,26 @@ include_directories(src/include)
 
 file(GLOB SOURCES "src/*.cpp")
 
+file(GLOB_RECURSE FONT_FILES CONFIGURE_DEPENDS "assets/fonts/*/*.ttf")
+
+file(GLOB_RECURSE SHADER_FILES CONFIGURE_DEPENDS "assets/shaders/*.frag")
+
+add_custom_target(copy_fonts ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/fonts
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${FONT_FILES} ${CMAKE_BINARY_DIR}/fonts
+    DEPENDS ${FONT_FILES}
+)
+
+add_custom_target(copy_shaders ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/shaders
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SHADER_FILES} ${CMAKE_BINARY_DIR}/shaders
+    DEPENDS ${SHADER_FILES}
+)
+
 add_executable(main ${SOURCES})
-target_compile_features(main PRIVATE cxx_std_17)
+
+add_dependencies(main copy_fonts)
+add_dependencies(main copy_shaders)
+
+target_compile_features(main PRIVATE cxx_std_20)
 target_link_libraries(main PRIVATE SFML::Graphics)
