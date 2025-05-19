@@ -1,25 +1,29 @@
 #include "include/bag.hpp"
 #include <iostream> 
 
+// Sets the position of the bag and its bounding box
 void Bag::setPosition(sf::Vector2f position) {
     this->position = position; 
     boundingBox.setPosition(position); 
 }
 
+// Gets the position (top left) of the bag
 sf::Vector2f Bag::getPosition() {
     return this->position; 
 } 
 
+// Inserts a tetromino into the bag, returns true if insertion was successful, false if it was not (bag is full)
 bool Bag::insertTetromino(Tetromino t) {
     if (tetros.size() == capacity) return false; 
     tetros.push_back(t);
     return true; 
 } 
 
+// Refills the bag up to max capacity, generates random tetrominos with different rotations + color
 void Bag::refillBag() {
     typedef std::uniform_int_distribution<> randInt; 
 
-    int totalBlockHeight = 0; 
+    int totalBlockHeight = 0;  // Counter to store the total height of all three tetrominos
 
     for (int i = 0; i < capacity; i++) {
         // Determine shape and color
@@ -58,8 +62,10 @@ void Bag::refillBag() {
         tetros.push_back(newT);
     }
 
+    // Equal spacing between each block, except from the top and bottom the spacing is halved (a.k.a space-around css tag)
+    // Spacing is the size of the box, minus the total height over the capacity
     float spacing = (boundingBox.getSize().y - totalBlockHeight*BLOCK_SIZE) / capacity;  
-    float startY = position.y + spacing/2.f; 
+    float startY = position.y + spacing/2.f; // Counter that stores the position of the current tetromino
     for (int i = 0; i < capacity; i++) {
         tetros[i].setPosition({
             position.x + boundingBox.getSize().x / 2.f - tetros[i].getSize().x * BLOCK_SIZE / 2.f,
@@ -69,17 +75,21 @@ void Bag::refillBag() {
     }
 }
 
+// Resets the bag, clears it and refills it
 void Bag::reset() {
     tetros.clear();
 
     refillBag(); 
 }
 
+// Checks if a given tetromino has a valid position within the board. 
 bool Bag::hasValidPos(Tetromino t, std::vector<std::vector<int>>& board) {
     sf::Vector2i size = {(int)t.getSize().x, (int)t.getSize().y}; 
 
+    // Loop through all possible board positions
     for (int i = 0; i < board.size() - size.y + 1; i++) {
         for (int j = 0; j < board[i].size() - size.x + 1; j++) {
+            // Loop through the block and check if all positions for the block are empty (< 0)
             bool isValid = true; 
             for (int r = 0; r < size.y; r++) {
                 for (int c = 0; c < size.x; c++) {
@@ -96,6 +106,7 @@ bool Bag::hasValidPos(Tetromino t, std::vector<std::vector<int>>& board) {
     return false; 
 }
 
+// Update function for the bag
 void Bag::update(sf::RenderWindow& r, std::vector<std::vector<int>>& board) {
     if (tetros.empty()) {
         refillBag(); 
@@ -124,6 +135,7 @@ void Bag::update(sf::RenderWindow& r, std::vector<std::vector<int>>& board) {
     }
 }
 
+// Draws the bag to the screen, including tetrominos
 void Bag::draw(sf::RenderWindow& r) {
     r.draw(boundingBox); 
     for (Tetromino& t : tetros) {
@@ -131,7 +143,7 @@ void Bag::draw(sf::RenderWindow& r) {
     }
 }
 
-
+// Draws the bag to a texture, including tetrominos
 void Bag::draw(sf::RenderTexture& r) {
     r.draw(boundingBox); 
     for (Tetromino& t : tetros) {

@@ -9,8 +9,11 @@
 
 int main()
 {
+    // Window setup
     auto window = sf::RenderWindow(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), "Block Blast");
     window.setFramerateLimit(144);
+
+    // Setting up scene + Gaussian blur textures
     sf::RenderTexture sceneTexture, blurTexture;
     if (!sceneTexture.resize({WINDOW_WIDTH, WINDOW_HEIGHT})) {
         std::cout << "Main scene could not be resized." << "\n";
@@ -19,6 +22,7 @@ int main()
         std::cout << "Blur texture could not be resized." << "\n"; 
     }
 
+    // Loading Gaussian blur fragment shaders 
     sf::Shader blurShaderH, blurShaderV;
     if (!blurShaderH.loadFromFile("../shaders/blur_horizontal.frag", sf::Shader::Type::Fragment)) {
         std::cout << "Horizontal shader did not load." << "\n"; 
@@ -28,6 +32,7 @@ int main()
         std::cout << "Vertical shader did not laod." << "\n";
     }
 
+    // Sprite that is drawn to screen with shader to simulate gaussian blur
     sf::Sprite sprite(sceneTexture.getTexture());
 
     Board board;
@@ -36,8 +41,10 @@ int main()
 
     Scoreboard s("Nunito-SemiBold.ttf"); 
 
+    // Game loop 
     while (window.isOpen())
-    {
+    {   
+        // Poll for keyboard and mouse events
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
@@ -64,6 +71,7 @@ int main()
             }
         }
 
+        // Game over screen 
         if (gameOver) {
             blurShaderH.setUniform("texture", sceneTexture.getTexture());
             blurShaderH.setUniform("radius", 5.f);
@@ -90,6 +98,7 @@ int main()
             continue; 
         }
 
+        // Main gameplay section
         board.updateBoard();
 
         bag.update(window, board.board); 

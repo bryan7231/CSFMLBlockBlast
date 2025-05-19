@@ -18,25 +18,32 @@ Block::Block(Color color, sf::Vector2f pos) {
     rect.setPosition(pos);
 }
 
+// Returns the position of the block
 sf::Vector2f Block::getPosition() {
     return rect.getPosition();
 }
 
+// Returns the position of the block relative to its tetromino (0, 0) to (5, 5)
 sf::Vector2i Block::getTetroPos() {
     return this->tetroCoords; 
 }
+
+// Sets the position of the block relative to its parent tetromino
 void Block::setTetroPos(sf::Vector2i pos) {
     this->tetroCoords = pos; 
 }
 
+// Sets the position of the block
 void Block::setPosition(sf::Vector2f pos) {
     rect.setPosition(pos);
 }
 
+// Sets the position of the block given x and y 
 void Block::setPosition(float x, float y) {
     rect.setPosition({x, y});
 }
 
+// Returns a read-write reference to the sf:RectangleShape of the block. 
 sf::RectangleShape& Block::shape() {
     return rect; 
 }

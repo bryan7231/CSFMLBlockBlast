@@ -13,11 +13,16 @@ public:
     Block(sf::Vector2f pos);
     Block(Color color, sf::Vector2f pos);
 
+    // Returns the position of the block
     sf::Vector2f getPosition();
+
+    // Sets the position of the block
     void setPosition(sf::Vector2f pos);
+
+    // Sets the position of the block given x and y 
     void setPosition(float x, float y);
 
-    // Fetches the position of hte block relative to its parent tetromino
+    // Returns the position of the block relative to its tetromino (0, 0) to (5, 5)
     sf::Vector2i getTetroPos();
 
     // Sets the position of the block relative to its parent tetromino

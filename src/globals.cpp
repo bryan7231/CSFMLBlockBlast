@@ -10,6 +10,7 @@ int currId = 0;
 bool gameOver = false; 
 float score = 0; 
 
+// Vector that holds the color data for all possible colors of tetrominos
 std::vector<sf::Color> Colors = {
     sf::Color(218, 98, 98), // RED
     sf::Color(222, 137, 53), // ORANGE
@@ -20,6 +21,7 @@ std::vector<sf::Color> Colors = {
     sf::Color(168, 153, 199) // PURPLE
 };
 
+// Vector that holds layouts for all possible shapes of tetrominos
 std::vector<std::vector<std::vector<bool>>> tetrominoes = 
 {
     { // Line 2
@@ -115,14 +117,17 @@ std::vector<std::vector<std::vector<bool>>> tetrominoes =
     }
 };
 
+// Converts window coordinates to grid coordinates on the board, as long as they are within the board
 sf::Vector2i toGridCoords(sf::Vector2f globalCoords) {
     return {(int)std::round((globalCoords.x - (X_OFFSET))/  BLOCK_SIZE), (int)std::round((globalCoords.y - (Y_OFFSET))/BLOCK_SIZE)};
 }
 
+// Converts grid coordinates to window coordinates
 sf::Vector2f toGlobalCoords(sf::Vector2i gridCoords) {
     return {(float)gridCoords.x * BLOCK_SIZE + X_OFFSET, (float)gridCoords.y * BLOCK_SIZE + Y_OFFSET};
 }
 
+// Converts the mouse position(screen coordinates) to window coordinates
 sf::Vector2f mouseToGlobalCoords(sf::RenderWindow& window, sf::Vector2i mouse) {
     return {
         sf::Mouse::getPosition().x - window.getPosition().x + MOUSE_X_OFFSET, 
@@ -130,6 +135,7 @@ sf::Vector2f mouseToGlobalCoords(sf::RenderWindow& window, sf::Vector2i mouse) {
     };
 }
 
+// Checks if grid coordinates given are within the board 
 bool withinBoard(sf::Vector2i gridCoords) {
     return gridCoords.x >= 0 && gridCoords.x < BOARD_SIZE && gridCoords.y >= 0 && gridCoords.y < BOARD_SIZE; 
 }

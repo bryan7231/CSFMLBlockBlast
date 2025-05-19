@@ -27,6 +27,7 @@ Board::Board() {
     outline.setPosition({X_OFFSET, Y_OFFSET});
 }
 
+// Updates the board based on the board vector, clears completed rows and updates score
 void Board::updateBoard() {
 
     std::vector<int> completedRows, completedCols; 
@@ -92,6 +93,7 @@ void Board::updateBoard() {
     // std::cout << "---------------------------------------------\n";
 }
 
+// Draws the board to a window
 void Board::draw(sf::RenderWindow& window) {
     window.draw(outline);
 
@@ -102,6 +104,7 @@ void Board::draw(sf::RenderWindow& window) {
     }
 }
 
+// Draws the board to a texture
 void Board::draw(sf::RenderTexture& window) {
     window.draw(outline);
 
@@ -112,6 +115,7 @@ void Board::draw(sf::RenderTexture& window) {
     }
 }
 
+// Clears the board, setting all tiles to empty
 void Board::clear() {
     for (int i = 0; i < board.size(); i++) {
         for (int j = 0; j < board[i].size(); j++) {

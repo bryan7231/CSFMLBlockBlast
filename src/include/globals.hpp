@@ -30,17 +30,26 @@ extern float score;
 #define TILE_START_X ((X_OFFSET) / 2.f) - (BLOCK_SIZE * 2)
 #define TILE_START_Y WINDOW_HEIGHT / 2.f - (BLOCK_SIZE * 2)
 
+// Enum for all possible colors for tetrominos
 enum Color {RED, ORANGE, YELLOW, GREEN, TEAL, BLUE, PURPLE};
 
+// Enum for all possible shapes for tetrominos
 enum TetrominoShape {Line2, Line3, Line4, Line5, Square2, Square3, L2, L2x3, L3, T2, T3, Rectangle, S};
 
+// Vector that holds layouts for all possible shapes of tetrominos
 extern std::vector<std::vector<std::vector<bool>>> tetrominoes; 
+
+// Vector that holds the color data for all possible colors of tetrominos
 extern std::vector<sf::Color> Colors;
 
+// Converts window coordinates to grid coordinates on the board, as long as they are within the board
 sf::Vector2i toGridCoords(sf::Vector2f globalCoords); 
 
+// Converts grid coordinates to window coordinates
 sf::Vector2f toGlobalCoords(sf::Vector2i gridCoords); 
 
+// Converts the mouse position(screen coordinates) to window coordinates
 sf::Vector2f mouseToGlobalCoords (sf::RenderWindow &window, sf::Vector2i mouse); 
 
+// Checks if grid coordinates given are within the board 
 bool withinBoard(sf::Vector2i gridCoords); 
