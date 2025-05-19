@@ -1,6 +1,13 @@
 # CMake SFML Block Blast recreation 
 
-Block Blast coded in C++ and SFML (+OpenGL), as simple as that. This project was pretty interesting to work on, and had a lot of nuance to it that I initally did not expect, such as centering the blocks and adding a system to make sure only one block is grabbed at at time. Overall, it was a really enjoyable project and I would encourage others to try as well! It uses some pretty interesting matrix techniques, as well as a simple shader for Gaussian blur on the game over screen. The score is calculated exponentially based on number of rows cleared, as well as given multiplicative increases if both rows and columns are completed. The game is pretty unbalanced as the random rotations makes it pretty hard to play a long time.  
+Block Blast coded in C++ and SFML (+OpenGL), as simple as that. This project was pretty interesting to work on, and had a lot of nuance to it that I initally did not expect, such as centering the blocks and adding a system to make sure only one block is grabbed at at time. Overall, it was a really enjoyable project and I would encourage others to try as well! It uses some pretty interesting matrix techniques, as well as a simple shader for Gaussian blur on the game over screen. The score is calculated exponentially based on number of rows cleared, as well as given multiplicative increases if both rows and columns are completed. The game is pretty unbalanced as the random rotations makes it pretty hard to get a good score. 
+
+![image](https://github.com/user-attachments/assets/c28fb2de-f5c0-478e-a679-855fda104b27)
+
+![image](https://github.com/user-attachments/assets/ff7e46a8-e0dc-4be1-a4e9-f04c81e7af3b)
+
+![image](https://github.com/user-attachments/assets/d3d0f931-ef00-4b96-8b97-31288821de82)
+
 
 ## How to Use
 
